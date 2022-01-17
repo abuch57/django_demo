@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from django.test import TestCase
 from django.utils import timezone
@@ -45,6 +46,9 @@ class QuestionModelTests(TestCase):
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
+
+    def test_flaky_test(self):
+        self.assertEqual(1, random.randint(1, 2))
 
 
 class QuestionIndexViewTests(TestCase):
