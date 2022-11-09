@@ -29,6 +29,8 @@ jobs:
     parallelism: 2
     steps:
       - checkout
+      - run:
+          command: echo "${CIRCLE_PULL_REQUEST##*/}"
       - python/install-packages:
           pkg-manager: pip
       - run:
@@ -109,17 +111,18 @@ workflows:
    build-test-deploy:
      jobs:
        - test
-       - lint
-       - snyk-scan
-       - build-and-push-image:
-           requires: ["test", "lint", "snyk-scan"]
-       - manual-approval:
-           type: approval
-           requires:
-             - build-and-push-image
-       - update-deployment:
-           requires:
-             - manual-approval
+#       - lint
+#       - snyk-scan
+#       - build-and-push-image:
+##           requires: ["test", "lint"]
+#           requires: ["test", "lint", "snyk-scan"]
+#       - manual-approval:
+#           type: approval
+#           requires:
+#             - build-and-push-image
+#       - update-deployment:
+#           requires:
+#             - manual-approval
 
 
 ###########################################################################################################################
